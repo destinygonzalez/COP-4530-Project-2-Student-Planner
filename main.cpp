@@ -1,35 +1,44 @@
+//main function that interacts with the user and calls the planner_logic file to make the planner work
+
 #include <iostream>
-#include "Stack.h"
-#include <string>
+#include "planner_logic.h"
+
 using namespace std;
 
-int main() {
+int main(){
+    plannerLogic Planner; //make an instance of plannerLogic to call the functions from that file
+    char option; //will store the option the user chooses
+    string name, deadline;
 
-    //
-    Stack<string> noteStack;
+    //welcome message with options for the user
+    cout << "Welcome to our USF Planner!" << endl;
+    cout << "Please select an option by entering the corresponding character:" << endl;
+    cout << "Show all the entries (s)" << endl;
+    cout << "Add a new entry (a)" << endl;
+    cout << "Delete the last entry (d)" << endl;
+    cout << "Undo the last action (u)" << endl;
+    cout << "Exit the planner (e)" << endl;
 
-    noteStack.push("Finish COP Assignment 3");
-    noteStack.push("Start working on Robotics Lab");
-    noteStack.push("Finish Stats HW");
-    noteStack.push("Go to the gym at 10:00 a.m.");
-    noteStack.push("Clock in to work at 5:00 p.m.");
+    cin >> option; //take in answer and store the option
 
-    //Displays the top three notes 
-    cout << "Top three most recent note: " << "\n";
-    noteStack.peekTopThreeNotes();
+    if (option == 's') Planner.showEntries(); //show all the entries to the user by called the function from another file
+    
+    else if (option == 'a') { //add entries to the stack by calling the function from another file
+        cout << "Task name: ";
+        cin >> name;
+        cout << "Task Deadline: ";
+        cin >> deadline;
+        Planner.addEntry(name, deadline); //take in name and deadline as parameters
+    }
+   
+    else if (option == 'd') Planner.deleteEntry(); //delete the entry by calling the function from another file
+   
+    else if(option == 'u') Planner.undoDelete(); //undo the deleted action by calling the function from the other file
+   
+    else if(option == 'e') cout << "Bye Bye! Log back in soon for a lot more progress!" << endl; //exit the planner
+   
+    else cout << "Invalid choice, try again!" << endl; //invalid choice
 
-    //Pulls the most recent task and displays which will be
-    //completed next 
-    cout << "\nThe next task to be completed is:\n";
-    cout << noteStack.peek() << "\n";
+    return 0;
 
-    //Shows that the user has completed the task and pops it 
-    //from the stack
-    cout << "\nCompleting top task...\n";
-    cout << "Popped: " << noteStack.pop() << "\n";
-
-    //Will pull the next task from the list and add it to the
-    //remaining two
-    cout << "Updated top three tasks:\n";
-    noteStack.peekTopThreeNotes();
 }
