@@ -13,10 +13,11 @@ using namespace std;
 
 class plannerLogic{
     private:
-        vector<Entry> entryStack; //vector that will store entries of the planner, will be used as the stack
-        Stack<vector<Entry>> undoButton; //vector stack that will store the last states of the entryStack so that we can use it for the undo function
+        vector<highImportance> entryStack; //vector that will store entries of the planner, will be used as the stack
+        Stack<vector<highImportance>> undoButton; //vector stack that will store the last states of the entryStack so that we can use it for the undo function
     public:
         void addEntry(string name, string deadline); //call function to make new entry and add it to the list
+        void addHighImportanceEntry(string name, string deadline, int level); //adds new priority entry to planner using name, deadline and importance level
         void deleteEntry(); //call the function that will delete the most recent entry in the list
         void undoDelete(); //call the function that will undo the action of the delete button
         void showEntries(); //call the function that will show all the entries to the user
