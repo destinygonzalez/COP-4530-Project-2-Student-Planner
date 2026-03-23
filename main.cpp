@@ -9,7 +9,8 @@ using namespace std;
 int main(){
     plannerLogic Planner; //make an instance of plannerLogic to call the functions from that file
     char option; //will store the option the user chooses
-    string name, deadline;
+    string name, deadline; //stpres name and deadline user designates
+    int level; //makes int variable for levels of importance
 
     cout << "Welcome to our USF Planner!" << endl;
 
@@ -18,6 +19,7 @@ int main(){
         cout << "\nPlease select an option by entering the corresponding character:" << endl;
         cout << "Show all the entries (s)" << endl;
         cout << "Add a new entry (a)" << endl;
+        cout << "Add a high-importance entry (h)" << endl;
         cout << "Delete the last entry (d)" << endl;
         cout << "Undo the last action (u)" << endl;
         cout << "Exit the planner (e)" << endl;
@@ -36,6 +38,19 @@ int main(){
             getline(cin, deadline); //reads the entire line
 
             Planner.addEntry(name, deadline); //take in name and deadline as parameters
+        }
+        else if(option == 'h'){ //add entries to the stack and allows user to designate a number representing the importance
+            cout << "Task name: ";
+            getline(cin, name);
+
+            cout << "Task Deadline: ";
+            getline(cin, deadline);
+
+            cout << "What level of importance is this task (1 being the highest): ";
+            cin >> level; //gets importance level input by the user
+            cin.ignore(1000, '\n'); //clears input buffer, plus the newline character to allow future getline() to be called correctly
+
+            Planner.addHighImportanceEntry(name, deadline, level); //calls function to create and store high importance task using the name, deadline, and priority level
         }
         else if (option == 'd'){
             Planner.deleteEntry(); //delete the entry by calling the function from another file
