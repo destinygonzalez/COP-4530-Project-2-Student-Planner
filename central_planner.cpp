@@ -3,14 +3,19 @@
 #include "planner_logic.h"
 #include <iostream>
 
-void plannerLogic:: addEntry(string name, string deadline){ //call function to make new entry and add it to the list
+void plannerLogic::addEntry(string name, string deadline){ //adds a task to planner with default importance of 1
 
     undoButton.push(entryStack); //pushes the current stack of entries to undo before adding a new entry so that we can undo this action later if needed
-    entryStack.push_back(Entry(name, deadline)); //add new entry to the stack
-
+    entryStack.push_back(highImportance(name, deadline, 1)); //highImportance object inherits from Entry with default value of 1 and adds it to the planner
     cout << "Your entry has been added to your planner!" << endl; //check in message
 };
 
+void plannerLogic::addHighImportanceEntry(string name, string deadline, int level) { //adds priority task to planner using the designated level by the user
+    undoButton.push(entryStack); //pushes the current stack of entries to undo before adding a new entry so that we can undo this action later if needed
+    entryStack.push_back(highImportance(name, deadline, level)); //highImportance object created with the inputted name, deadline and level of importance, which is stored into the planner
+
+    cout << "This task has been labeled! Select (s) to see your tasks and their priority level!" << "\n"; //Tells user of priority task 
+}
 
 void plannerLogic:: deleteEntry(){ //call the function that will delete the most recent entry in the list
 
@@ -50,6 +55,8 @@ void plannerLogic::showEntries(){ //call the function that will show all the ent
     cout << "Your tasks are: " << endl;
 
     for (int i = 0; i < entryStack.size(); i++){ //loop through the stack and output the name and deadline of each entry
-        cout << "- " << entryStack[i].name << " due " << entryStack[i].deadline << endl;
+        cout << "- " << entryStack[i].name 
+        << " due " << entryStack[i].deadline 
+        << " - importance level: " << entryStack[i].level << endl;
     } 
 }; 
